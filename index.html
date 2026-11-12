@@ -225,23 +225,25 @@ function lineChart(el, days, series, title){
   const hits = days.map((d,i)=>`<rect x="${x(i)-(W/n)/2}" y="0" width="${W/n}" height="${H}" fill="transparent" data-i="${i}"/>`).join("");
   const sum = series.map(s=>{ const a=days.map(d=>d[s.k]).filter(v=>v!=null); return `${s.n}: <b>${a.reduce((p,c)=>p+c,0).toLocaleString("he-IL")}</b>`; }).join(" · ");
   el.innerHTML = `<h3>${title}</h3><div class="tot">סה״כ בתקופה – ${sum}</div><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" dir="ltr">${g}${paths}<line id="${el.id}-cur" x1="0" x2="0" y1="${P.t}" y2="${H-P.b}" stroke="#f7dfa0" stroke-dasharray="3 3" opacity="0"/>${hits}</svg>`+
-    `<div class="legend">${series.map(s=>`<span><i style="background:${s.c}"></i>${s.n}</span>`).join("")}</div>`;
+    `<div class="legend">${series.map(s=>`<span><i style="background:${s.c}"></i>${s.n}</span>`).join("")}</div>`+(series.some(s=>s.k==="ig_reach")?`<div class="note" style="color:var(--mut);font-size:12px;margin-top:4px">נתון החשיפה (כמה אנשים שונים ראו) קיים ב-Metricool רק מ-29.10.26.</div>`:"");
   const svg = el.querySelector("svg"), cur = el.querySelector(`#${el.id}-cur`);
   const show = (ev) => { const r = ev.target.closest("rect"); if(!r) return; const i=+r.dataset.i, d=days[i];
     cur.setAttribute("x1",x(i)); cur.setAttribute("x2",x(i)); cur.setAttribute("opacity","1");
-    tip.innerHTML = d.d+" · "+series.map(s=>`${s.n}: ${d[s.k]??"—"}`).join(" · "); tip.style.display="block";
+    tip.innerHTML = d.d+" · "+series.filter(s=>d[s.k]!=null).map(s=>`${s.n}: ${d[s.k].toLocaleString("he-IL")}`).join(" · "); tip.style.display="block";
     const p = ev.touches?ev.touches[0]:ev; tip.style.left=Math.min(innerWidth-tip.offsetWidth-8,Math.max(8,p.clientX-tip.offsetWidth/2))+"px"; tip.style.top=(p.clientY-42)+"px"; };
   svg.addEventListener("mousemove", show); svg.addEventListener("touchstart", show, {passive:true});
   svg.addEventListener("mouseleave", ()=>{tip.style.display="none"; cur.setAttribute("opacity","0");});
 }
 function renderComp(m){
   const el = document.getElementById("comp"), c = m.competitors||[];
-  const me = m.days.filter(d=>d.ig_followers!=null).slice(-1)[0];
-  const measured = c.filter(x=>x.followers!=null), pending = c.filter(x=>x.followers==null);
-  const all = [{name:"Fly Dent (אנחנו)", followers: me?me.ig_followers:0, me:1}, ...measured].sort((a,b)=>b.followers-a.followers);
-  const mx = Math.max(...all.map(a=>a.followers||0),1);
-  el.innerHTML = `<div class="note">עוקבים באינסטגרם</div>` + all.map(a=>`<div class="bar ${a.me?"me":""}"><span>${esc(a.name)}</span><div class="tr"><div class="fl" style="width:${(100*(a.followers||0)/mx).toFixed(1)}%"></div></div><b>${(a.followers||0).toLocaleString("he-IL")}</b></div>`).join("")+
-   (pending.length?`<div class="note" style="margin-top:12px">מתחרים שזוהו ונמצאים בבדיקה (המספרים יתווספו אוטומטית):</div>`+pending.map(a=>`<div class="bar"><span>${esc(a.name)}</span><span class="note">${esc(a.market||"")}</span><b>⏳</b></div>`).join(""):"")+
+  const lastOf=k=>{const x=m.days.filter(d=>d[k]!=null).slice(-1)[0];return x?x[k]:0;};
+  const block=(title,key,meVal)=>{
+    const measured=c.filter(x=>x[key]!=null), all=[{name:"Fly Dent (אנחנו)",v:meVal,me:1},...measured.map(x=>({name:x.name,v:x[key]}))].sort((a,b)=>b.v-a.v);
+    const mx=Math.max(...all.map(a=>a.v||0),1);
+    return `<div class="note" style="margin-top:6px"><b style="color:var(--gold)">${title}</b></div>`+all.map(a=>`<div class="bar ${a.me?"me":""}"><span>${esc(a.name)}</span><div class="tr"><div class="fl" style="width:${(100*(a.v||0)/mx).toFixed(1)}%"></div></div><b>${(a.v||0).toLocaleString("he-IL")}</b></div>`).join("")+
+      (measured.length<c.length?`<div class="note" style="font-size:12.5px">⏳ בבדיקה: ${c.filter(x=>x[key]==null).map(x=>esc(x.name)).join(" · ")}</div>`:"");
+  };
+  el.innerHTML = block("📸 עוקבים באינסטגרם","followers",lastOf("ig_followers")) + `<div style="height:12px"></div>` + block("📘 עוקבים בפייסבוק","fb_followers",lastOf("fb_followers")) +
    `<div class="note" style="margin-top:10px">כל מתחרה חדש שהסוכנים רואים נוסף לכאן אוטומטית. חשיפות של מתחרים אינן ציבוריות – ההשוואה לפי עוקבים ונתונים ציבוריים בלבד.</div>`;
 }
 let MET=null, RANGE=365;

@@ -15,7 +15,7 @@
 
 # Competitors (data/competitors.json) — user 12.11.2026: "כל פעם שאתה רואה מתחרה תוסיף"
 - Any agent that sees a competitor (Israeli-market dental tourism / Dubai, Turkey, Georgia etc. clinics or agencies targeting Israelis) appends it:
-  {"name","market","handle" (Instagram, null if unknown),"followers":null,"posts":null,"as_of":null,"source","added":"YYYY-MM-DD"}.
+  {"name","market","handle" (Instagram, null if unknown),"followers":null,"posts":null,"fb_page" (Facebook page URL/name, null if unknown),"fb_followers":null,"as_of":null,"source","added":"YYYY-MM-DD"}.
   Never duplicate (match by name or handle). Never delete entries. Never invent numbers.
-- The evening task (user's Chrome) fills handle/followers/posts/as_of from the public Instagram profile.
+- The evening task (user's Chrome) fills handle/followers/posts from the public Instagram profile AND fb_page/fb_followers from the public Facebook page, plus as_of.
 - build_metrics.py reads data/competitors.json automatically; commit it together with data/*.json.
