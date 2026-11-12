@@ -5,7 +5,14 @@
 import json, sys, datetime
 rows = json.load(open(sys.argv[1]))["rows"]
 f = lambda v: None if v in (None, "") else round(float(v))
-by = {r[5]: {"ig_reach": f(r[0]), "ig_views": f(r[1]), "ig_followers": f(r[2]), "fb_views": f(r[3]), "fb_followers": f(r[4])} for r in rows}
+import os
+by = {}
+if os.path.exists("data/metrics.json"):   # keep history: new rows update/extend, never shrink the year
+    for x in json.load(open("data/metrics.json")).get("days", []):
+        if x.get("iso"): by[x["iso"].replace("-", "")] = {k: x.get(k) for k in ("ig_reach","ig_views","ig_followers","fb_views","fb_followers")}
+by.update({r[5]: {"ig_reach": f(r[0]), "ig_views": f(r[1]), "ig_followers": f(r[2]), "fb_views": f(r[3]), "fb_followers": f(r[4])} for r in rows})
+cut = (datetime.datetime.now() - datetime.timedelta(days=366)).strftime("%Y%m%d")
+by = {k: v for k, v in by.items() if k >= cut}
 d0 = datetime.datetime.strptime(min(by), "%Y%m%d"); d1 = datetime.datetime.strptime(max(by), "%Y%m%d")
 days = []
 while d0 <= d1:
