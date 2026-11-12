@@ -3,82 +3,196 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fly Dent Dubai · צוות הסוכנים</title>
+<title>Fly Dent Dubai · משרד הסוכנים</title>
 <meta name="robots" content="noindex">
 <style>
-:root{--bg:#070605;--card:#13100b;--line:#3a2c14;--gold:#e8c06a;--gold2:#f7dfa0;--txt:#f4efe4;--mut:#a89a80;--ok:#7fc79a;--warn:#f0a35a;--idle:#8a8a8a}
+:root{--bg:#070605;--card:#14100a;--line:#3a2c14;--gold:#e8c06a;--gold2:#f7dfa0;--txt:#f4efe4;--mut:#a89a80;--ok:#5fd08a;--warn:#f0a35a;--idle:#8a8a8a}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1200px 600px at 50% -200px,#2a1f0c,transparent),var(--bg);color:var(--txt);font-family:"Heebo","Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5}
-header{padding:28px 20px 10px;text-align:center}
-header img{height:56px;background:#fff;border-radius:14px;padding:6px 14px}
-h1{margin:14px 0 2px;font-size:30px;font-weight:900;background:linear-gradient(180deg,#fffbea,#e8b84a);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--mut);font-size:15px}
-.wrap{max-width:1100px;margin:0 auto;padding:10px 16px 40px}
-.stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0 22px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 18px;text-align:center;min-width:120px}
+body{margin:0;background:radial-gradient(1200px 700px at 50% -250px,#2d210c,transparent),var(--bg);color:var(--txt);font-family:"Heebo","Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5;min-height:100vh}
+header{padding:26px 20px 6px;text-align:center}
+header img{height:54px;background:#fff;border-radius:14px;padding:6px 14px}
+h1{margin:12px 0 0;font-size:30px;font-weight:900;background:linear-gradient(180deg,#fffbea,#e8b84a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);font-size:14.5px}
+.wrap{max-width:1180px;margin:0 auto;padding:6px 16px 40px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 18px;text-align:center;min-width:118px}
 .stat b{display:block;font-size:26px;color:var(--gold2)}
-.stat span{font-size:13px;color:var(--mut)}
-h2{font-size:20px;color:var(--gold);margin:26px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-.ag{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
-.ag .top{display:flex;align-items:center;gap:10px}
-.ag .em{font-size:28px}
-.ag .nm{font-weight:800;font-size:17px}
-.pill{margin-inline-start:auto;font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
-.s-ok{color:var(--ok)}.s-warn{color:var(--warn)}.s-idle{color:var(--idle)}
-.role{color:var(--mut);font-size:13.5px;margin:6px 0 8px}
-.row{font-size:14px;margin:4px 0}
-.row i{font-style:normal;color:var(--gold)}
-.when{font-size:12px;color:var(--mut)}
+.stat span{font-size:12.5px;color:var(--mut)}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0 18px}
+.filters button{background:transparent;color:var(--txt);border:1px solid var(--line);border-radius:999px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}
+.filters button.on{background:linear-gradient(180deg,#f7dfa0,#c9962e);color:#1c1204;border-color:transparent;font-weight:800}
+.office{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.desk{position:relative;background:linear-gradient(180deg,#1a140b,#0e0b07);border:1px solid var(--line);border-radius:20px;padding:14px 12px 12px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;overflow:hidden}
+.desk:hover{transform:translateY(-4px);border-color:#8a6a2c;box-shadow:0 14px 30px rgba(0,0,0,.5),0 0 0 1px rgba(232,192,106,.25)}
+.desk.hide{display:none}
+.av{width:120px;height:120px;margin:0 auto 4px;display:block}
+.desk.working .av{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.nm{font-weight:800;font-size:16px}
+.rl{color:var(--mut);font-size:12.5px;min-height:38px}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:12px;margin-top:6px;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.04)}
+.dot{width:9px;height:9px;border-radius:50%}
+.s-ok .dot{background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 1.6s infinite}
+.s-warn .dot{background:var(--warn);box-shadow:0 0 8px var(--warn)}
+.s-idle .dot{background:var(--idle)}
+@keyframes pulse{50%{opacity:.35}}
+.bubble{position:absolute;top:10px;inset-inline-start:10px;background:#f7dfa0;color:#1c1204;font-size:11px;font-weight:700;border-radius:10px;padding:2px 8px;opacity:0;transform:translateY(-6px);transition:.25s}
+.desk:hover .bubble{opacity:1;transform:none}
+h2{font-size:20px;color:var(--gold);margin:30px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
 .log{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.ev{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:10px 14px;border-bottom:1px solid #221a0c;font-size:14px}
+.ev{display:grid;grid-template-columns:44px 110px 1fr;gap:10px;align-items:center;padding:9px 14px;border-bottom:1px solid #221a0c;font-size:14px}
 .ev:last-child{border-bottom:none}
+.ev .mini{width:40px;height:40px}
 .ev .t{color:var(--mut);font-size:12.5px}
 .ev .a{color:var(--gold);font-weight:700;margin-inline-end:6px}
 .ev.attention{background:rgba(240,163,90,.07)}
 .ev.attention .a:before{content:"⚠️ "}
+.more{display:block;margin:12px auto 0;background:transparent;border:1px solid var(--line);color:var(--gold);border-radius:999px;padding:7px 18px;font:inherit;cursor:pointer}
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.ov.show{display:flex}
+.md{background:linear-gradient(180deg,#1c150b,#0d0a06);border:1px solid #6b5124;border-radius:22px;max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:22px;position:relative;animation:pop .25s ease-out}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.md .x{position:absolute;top:10px;inset-inline-end:14px;background:none;border:none;color:var(--mut);font-size:26px;cursor:pointer}
+.md .hd{display:flex;gap:14px;align-items:center}
+.md .hd svg{width:96px;height:96px;flex:none}
+.md h3{margin:0;font-size:22px}
+.md .kv{margin:12px 0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14.5px}
+.md .kv i{font-style:normal;color:var(--gold)}
+.md h4{margin:16px 0 6px;color:var(--gold);font-size:15px}
+.md .li{font-size:13.5px;padding:6px 0;border-bottom:1px dashed #2c2212}
+.md .li span{color:var(--mut);font-size:12px;margin-inline-end:6px}
 footer{color:var(--mut);text-align:center;font-size:12.5px;padding:20px}
-@media(max-width:560px){.ev{grid-template-columns:1fr}.ev .t{order:-1}}
+@media(max-width:560px){.ev{grid-template-columns:40px 1fr}.ev .t{grid-column:2}.office{grid-template-columns:repeat(2,1fr)}.av{width:96px;height:96px}}
 </style>
 </head>
 <body>
 <header>
   <img src="logo.png" alt="Fly Dent">
-  <h1>צוות הסוכנים של Fly Dent Dubai</h1>
+  <h1>משרד הסוכנים של Fly Dent Dubai</h1>
   <div class="sub" id="upd">טוען…</div>
 </header>
 <div class="wrap">
   <div class="stats" id="stats"></div>
-  <h2>הסוכנים</h2>
-  <div class="grid" id="agents"></div>
+  <div class="filters" id="filters">
+    <button data-f="all" class="on">כולם</button>
+    <button data-f="ok">עובדים</button>
+    <button data-f="warn">ממתינים לאישור</button>
+    <button data-f="idle">מושהים / ממתינים</button>
+  </div>
+  <div class="office" id="office"></div>
   <h2>יומן פעילות</h2>
   <div class="log" id="log"></div>
+  <button class="more" id="more">הצג עוד</button>
 </div>
-<footer>מתעדכן אוטומטית כל בוקר על ידי המנהל-על · בלי פרטי מטופלים</footer>
+<div class="ov" id="ov"><div class="md" id="md"></div></div>
+<footer>מתעדכן אוטומטית כל בוקר על ידי המנהל-על · הדמויות הן איורים · בלי פרטי מטופלים</footer>
 <script>
+// ---------- illustrated avatars (original SVG characters) ----------
+const LOOKS = {
+ manager:   {skin:"#e8b98f",hair:"#2b1d12",style:"short",shirt:"#111",tie:"#d4a53c",prop:"crown"},
+ social:    {skin:"#f1c8a2",hair:"#7a3e1d",style:"long",shirt:"#c9962e",prop:"phone"},
+ growth:    {skin:"#c98d63",hair:"#1a1410",style:"curly",shirt:"#2f6b4a",prop:"rocket"},
+ listening: {skin:"#e9bf97",hair:"#3a2a1c",style:"cap",shirt:"#3b3b52",prop:"glass"},
+ engagement:{skin:"#f3cfae",hair:"#b8732e",style:"bun",shirt:"#7a2f45",prop:"chat"},
+ health:    {skin:"#d9a47c",hair:"#222",style:"short",shirt:"#f4f4f4",prop:"heart"},
+ video:     {skin:"#e0ac84",hair:"#111",style:"beard",shirt:"#222",prop:"camera"},
+ proof:     {skin:"#f0c49c",hair:"#e2b35a",style:"long",shirt:"#f0e6d2",prop:"star"},
+ copy:      {skin:"#cf9970",hair:"#4a2c18",style:"glasses",shirt:"#56406e",prop:"pen"},
+ research:  {skin:"#eabf9a",hair:"#6b6b6b",style:"glasses",shirt:"#2c4a66",prop:"glass"},
+ leads:     {skin:"#e4b48e",hair:"#2b1d12",style:"short",shirt:"#555",prop:"mail"},
+ triage:    {skin:"#d49b72",hair:"#1d1d1d",style:"bun",shirt:"#e8f2f0",prop:"tooth"},
+ analyst:   {skin:"#f2cba8",hair:"#30241a",style:"glasses",shirt:"#1f3a33",prop:"chart"},
+ brand:     {skin:"#c88a60",hair:"#7a1f2b",style:"long",shirt:"#0d0d0d",prop:"palette"}
+};
+const PROPS = {
+ crown:'<path d="M86 30l8 8 6-12 6 12 8-8-3 16H89z" fill="#f0c95e" stroke="#7a561a" stroke-width="1.5"/>',
+ phone:'<rect x="104" y="92" width="18" height="30" rx="4" fill="#111" stroke="#f0c95e" stroke-width="2"/><rect x="107" y="96" width="12" height="20" rx="2" fill="#7fd0ff"/>',
+ rocket:'<path d="M112 120c0-16 6-26 10-30 4 4 10 14 10 30z" fill="#f4f4f4" stroke="#c9962e" stroke-width="2"/><circle cx="122" cy="104" r="3.5" fill="#7fd0ff"/><path d="M116 120l6 10 6-10z" fill="#ff8a3d"/>',
+ glass:'<circle cx="116" cy="102" r="10" fill="rgba(127,208,255,.35)" stroke="#f0c95e" stroke-width="3"/><path d="M123 110l9 10" stroke="#f0c95e" stroke-width="4" stroke-linecap="round"/>',
+ chat:'<path d="M100 88h30a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6h-18l-8 7v-7h-4a6 6 0 0 1-6-6V94a6 6 0 0 1 6-6z" fill="#f7dfa0"/><circle cx="108" cy="101" r="2" fill="#333"/><circle cx="115" cy="101" r="2" fill="#333"/><circle cx="122" cy="101" r="2" fill="#333"/>',
+ heart:'<path d="M116 124c-14-9-18-15-18-21a8 8 0 0 1 18-4 8 8 0 0 1 18 4c0 6-4 12-18 21z" fill="#e5484d"/><path d="M102 108h8l3-5 4 9 3-4h10" stroke="#fff" stroke-width="2" fill="none"/>',
+ camera:'<rect x="98" y="96" width="30" height="22" rx="4" fill="#222" stroke="#f0c95e" stroke-width="2"/><circle cx="113" cy="107" r="7" fill="#444" stroke="#f0c95e" stroke-width="2"/><rect x="104" y="92" width="10" height="5" rx="1" fill="#f0c95e"/>',
+ star:'<path d="M116 88l5 10 11 2-8 8 2 11-10-5-10 5 2-11-8-8 11-2z" fill="#f0c95e" stroke="#7a561a" stroke-width="1.5"/>',
+ pen:'<path d="M104 124l4-14 18-18 10 10-18 18z" fill="#f0c95e" stroke="#7a561a" stroke-width="1.5"/><path d="M104 124l4-14 10 10z" fill="#333"/>',
+ mail:'<rect x="98" y="96" width="34" height="22" rx="3" fill="#f4f4f4" stroke="#c9962e" stroke-width="2"/><path d="M98 98l17 12 17-12" stroke="#c9962e" stroke-width="2" fill="none"/>',
+ tooth:'<path d="M108 90c-6 0-9 5-8 11 1 4 3 6 4 10 1 6 2 12 5 12s3-6 4-9c1-2 2-2 3-2s2 0 3 2c1 3 1 9 4 9s4-6 5-12c1-4 3-6 4-10 1-6-2-11-8-11-4 0-6 2-8 2s-4-2-8-2z" fill="#fff" stroke="#c9962e" stroke-width="2"/>',
+ chart:'<rect x="98" y="92" width="34" height="28" rx="3" fill="#0d1f1a" stroke="#f0c95e" stroke-width="2"/><path d="M103 114l7-8 6 5 10-12" stroke="#5fd08a" stroke-width="3" fill="none" stroke-linecap="round"/>',
+ palette:'<path d="M115 90c-12 0-19 8-19 16 0 7 6 12 12 12 3 0 4-2 4-4s2-4 5-4h5c5 0 9-4 9-9 0-7-7-11-16-11z" fill="#f4e3c1" stroke="#7a561a" stroke-width="1.5"/><circle cx="106" cy="102" r="3" fill="#e5484d"/><circle cx="114" cy="97" r="3" fill="#f0c95e"/><circle cx="123" cy="99" r="3" fill="#2f6b4a"/><circle cx="127" cy="107" r="3" fill="#2c4a66"/>'
+};
+function avatar(id, cls){
+  const L = LOOKS[id] || LOOKS.leads;
+  let hair = "";
+  if (L.style==="long") hair = `<path d="M46 62c0-22 14-34 34-34s34 12 34 34v34c-6-6-10-14-10-24-8 2-40 2-48 0 0 10-4 18-10 24z" fill="${L.hair}"/>`;
+  else if (L.style==="curly") hair = [40,52,64,76,88,100,112].map((x,i)=>`<circle cx="${x+(i%2?2:0)}" cy="${40+(i%2?-4:2)}" r="12" fill="${L.hair}"/>`).join("");
+  else if (L.style==="bun") hair = `<circle cx="80" cy="22" r="12" fill="${L.hair}"/><path d="M48 60c0-20 13-32 32-32s32 12 32 32c-6-10-18-16-32-16s-26 6-32 16z" fill="${L.hair}"/>`;
+  else if (L.style==="cap") hair = `<path d="M48 56c0-18 13-28 32-28s32 10 32 28z" fill="${L.hair}"/><path d="M108 54h20c0 4-6 6-20 6z" fill="${L.hair}"/>`;
+  else hair = `<path d="M48 60c0-20 13-32 32-32s32 12 32 32c-4-8-14-14-32-14s-28 6-32 14z" fill="${L.hair}"/>`;
+  const beard = L.style==="beard" ? `<path d="M56 76c2 18 12 26 24 26s22-8 24-26c-6 8-14 10-24 10s-18-2-24-10z" fill="${L.hair}"/>` : "";
+  const glasses = L.style==="glasses" ? `<g stroke="#111" stroke-width="2.5" fill="rgba(255,255,255,.15)"><circle cx="69" cy="66" r="8"/><circle cx="91" cy="66" r="8"/><path d="M77 66h6"/></g>` : "";
+  const tie = L.tie ? `<path d="M80 112l-5 8 5 22 5-22z" fill="${L.tie}"/>` : "";
+  return `<svg class="${cls||'av'}" viewBox="0 0 160 160" aria-hidden="true">
+    <defs><radialGradient id="bg-${id}-${cls}" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#3b2c10"/><stop offset="1" stop-color="#0c0905"/></radialGradient></defs>
+    <circle cx="80" cy="80" r="76" fill="url(#bg-${id}-${cls})" stroke="#c9962e" stroke-width="3"/>
+    <clipPath id="cp-${id}-${cls}"><circle cx="80" cy="80" r="74"/></clipPath>
+    <g clip-path="url(#cp-${id}-${cls})">
+      <path d="M30 160c2-30 22-48 50-48s48 18 50 48z" fill="${L.shirt}"/>
+      ${tie}
+      <rect x="72" y="92" width="16" height="16" rx="6" fill="${L.skin}"/>
+      <ellipse cx="80" cy="66" rx="30" ry="34" fill="${L.skin}"/>
+      ${hair}${beard}
+      <circle cx="69" cy="67" r="3.2" fill="#1a1410"/><circle cx="91" cy="67" r="3.2" fill="#1a1410"/>
+      <path d="M70 82q10 8 20 0" stroke="#7a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="62" cy="77" r="4" fill="#e88" opacity=".25"/><circle cx="98" cy="77" r="4" fill="#e88" opacity=".25"/>
+      ${glasses}
+    </g>
+    ${PROPS[L.prop]||""}
+  </svg>`;
+}
+// ---------- data ----------
 const fmt = s => { if(!s) return "—"; const d = new Date(s); if(isNaN(d)) return s;
   return d.toLocaleString("he-IL",{timeZone:"Asia/Jerusalem",day:"numeric",month:"numeric",hour:"2-digit",minute:"2-digit"}); };
 const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const cls = st => /הושלם|פעיל/.test(st) ? "s-ok" : /ממתין לאישור|שגיאה|תקלה/.test(st) ? "s-warn" : "s-idle";
+const kind = st => /הושלם|פעיל|עובד/.test(st) ? "ok" : /ממתין לאישור|שגיאה|תקלה/.test(st) ? "warn" : "idle";
+const clean = s => String(s||"").replace(/^[^\p{L}]+/u,"").trim();
+let AG=[], EV=[], shown=15;
+function agentOf(name){ const n = clean(name); return AG.find(a => n && (a.name===n || a.name.startsWith(n) || n.startsWith(a.name.split(" ")[0]+" "+(a.name.split(" ")[1]||"")))) ; }
+function renderLog(){
+  document.getElementById("log").innerHTML = EV.slice(0,shown).map(e => { const a = agentOf(e.agent);
+    return `<div class="ev ${e.level}">${avatar(a?a.id:"leads","mini")}<div class="t">${fmt(e.at)}</div><div><span class="a">${esc(clean(e.agent))}</span>${esc(e.action)}</div></div>`; }).join("");
+  document.getElementById("more").style.display = shown < EV.length ? "block" : "none";
+}
+function openAgent(id){
+  const a = AG.find(x=>x.id===id); if(!a) return;
+  const mine = EV.filter(e => { const g = agentOf(e.agent); return g && g.id===id; }).slice(0,8);
+  document.getElementById("md").innerHTML = `<button class="x" onclick="closeM()">×</button>
+    <div class="hd">${avatar(a.id,"big")}<div><h3>${esc(a.name)}</h3><div class="st s-${kind(a.status)}"><span class="dot"></span>${esc(a.status)}</div></div></div>
+    <div class="kv"><i>תפקיד</i><span>${esc(a.role)}</span><i>תדירות</i><span>${esc(a.cadence)}</span><i>ריצה אחרונה</i><span>${fmt(a.last_run)}</span><i>מה עשה</i><span>${esc(a.last_result||"—")}</span><i>המשימה הבאה</i><span>${esc(a.next_task||"—")}</span></div>
+    <h4>פעולות אחרונות</h4>${mine.length ? mine.map(e=>`<div class="li"><span>${fmt(e.at)}</span>${esc(e.action)}</div>`).join("") : '<div class="li">אין עדיין פעולות ביומן</div>'}`;
+  document.getElementById("ov").classList.add("show");
+}
+function closeM(){ document.getElementById("ov").classList.remove("show"); }
+document.getElementById("ov").addEventListener("click", e => { if(e.target.id==="ov") closeM(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape") closeM(); });
+document.getElementById("more").onclick = () => { shown += 15; renderLog(); };
+document.getElementById("filters").onclick = e => { const b = e.target.closest("button"); if(!b) return;
+  document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on", x===b));
+  document.querySelectorAll(".desk").forEach(d => d.classList.toggle("hide", b.dataset.f!=="all" && d.dataset.k!==b.dataset.f)); };
 Promise.all([fetch("data/agents.json?"+Date.now()).then(r=>r.json()), fetch("data/activity.json?"+Date.now()).then(r=>r.json())])
 .then(([ag, ac]) => {
-  document.getElementById("upd").textContent = "עודכן: " + fmt(ac.updated);
-  const done = ag.filter(a=>/הושלם/.test(a.status)).length;
-  const att = ac.items.filter(e=>e.level==="attention").length;
+  AG = ag; EV = ac.items;
+  document.getElementById("upd").textContent = "עודכן: " + fmt(ac.updated) + " · לחצו על סוכן כדי לראות מה הוא עושה";
+  const c = {ok:0,warn:0,idle:0}; ag.forEach(a=>c[kind(a.status)]++);
+  const att = EV.filter(e=>e.level==="attention").length;
   document.getElementById("stats").innerHTML =
-    `<div class="stat"><b>${ag.length}</b><span>סוכנים</span></div>`+
-    `<div class="stat"><b>${done}</b><span>סיימו את הריצה האחרונה</span></div>`+
-    `<div class="stat"><b>${ac.items.length}</b><span>פעולות אחרונות</span></div>`+
-    `<div class="stat"><b>${att}</b><span>דורש תשומת לב</span></div>`;
-  document.getElementById("agents").innerHTML = ag.map(a => `
-    <div class="ag"><div class="top"><span class="em">${esc(a.emoji)}</span><span class="nm">${esc(a.name)}</span>
-    <span class="pill ${cls(a.status)}">${esc(a.status)}</span></div>
-    <div class="role">${esc(a.role)}</div>
-    <div class="row"><i>אחרון:</i> ${esc(a.last_result||"—")}</div>
-    <div class="row"><i>הבא:</i> ${esc(a.next_task||"—")}</div>
-    <div class="when">${esc(a.cadence)} · ריצה אחרונה ${fmt(a.last_run)}</div></div>`).join("");
-  document.getElementById("log").innerHTML = ac.items.map(e => `
-    <div class="ev ${e.level}"><div class="t">${fmt(e.at)}</div><div><span class="a">${esc(e.agent)}</span>${esc(e.action)}</div></div>`).join("");
+    `<div class="stat"><b>${ag.length}</b><span>סוכנים במשרד</span></div><div class="stat"><b>${c.ok}</b><span>עובדים</span></div>`+
+    `<div class="stat"><b>${c.warn}</b><span>ממתינים לאישור</span></div><div class="stat"><b>${att}</b><span>דורש תשומת לב</span></div>`;
+  document.getElementById("office").innerHTML = ag.map(a => { const k = kind(a.status);
+    return `<div class="desk ${k==="ok"?"working":""}" data-k="${k}" tabindex="0" onclick="openAgent('${a.id}')" onkeydown="if(event.key==='Enter')openAgent('${a.id}')">
+      <div class="bubble">${esc((a.next_task||"").slice(0,38))}${(a.next_task||"").length>38?"…":""}</div>
+      ${avatar(a.id)}<div class="nm">${esc(a.emoji)} ${esc(a.name)}</div><div class="rl">${esc(a.role.length>70?a.role.slice(0,70)+"…":a.role)}</div>
+      <div class="st s-${k}"><span class="dot"></span>${esc(a.status)}</div></div>`; }).join("");
+  renderLog();
 }).catch(() => { document.getElementById("upd").textContent = "לא ניתן לטעון את הנתונים כרגע"; });
 </script>
 </body>
