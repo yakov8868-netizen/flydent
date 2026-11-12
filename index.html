@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fly Dent Dubai · צוות הסוכנים</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#070605;--card:#13100b;--line:#3a2c14;--gold:#e8c06a;--gold2:#f7dfa0;--txt:#f4efe4;--mut:#a89a80;--ok:#7fc79a;--warn:#f0a35a;--idle:#8a8a8a}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -200px,#2a1f0c,transparent),var(--bg);color:var(--txt);font-family:"Heebo","Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5}
+header{padding:28px 20px 10px;text-align:center}
+header img{height:56px;background:#fff;border-radius:14px;padding:6px 14px}
+h1{margin:14px 0 2px;font-size:30px;font-weight:900;background:linear-gradient(180deg,#fffbea,#e8b84a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);font-size:15px}
+.wrap{max-width:1100px;margin:0 auto;padding:10px 16px 40px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0 22px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 18px;text-align:center;min-width:120px}
+.stat b{display:block;font-size:26px;color:var(--gold2)}
+.stat span{font-size:13px;color:var(--mut)}
+h2{font-size:20px;color:var(--gold);margin:26px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.ag{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.ag .top{display:flex;align-items:center;gap:10px}
+.ag .em{font-size:28px}
+.ag .nm{font-weight:800;font-size:17px}
+.pill{margin-inline-start:auto;font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.s-ok{color:var(--ok)}.s-warn{color:var(--warn)}.s-idle{color:var(--idle)}
+.role{color:var(--mut);font-size:13.5px;margin:6px 0 8px}
+.row{font-size:14px;margin:4px 0}
+.row i{font-style:normal;color:var(--gold)}
+.when{font-size:12px;color:var(--mut)}
+.log{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.ev{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:10px 14px;border-bottom:1px solid #221a0c;font-size:14px}
+.ev:last-child{border-bottom:none}
+.ev .t{color:var(--mut);font-size:12.5px}
+.ev .a{color:var(--gold);font-weight:700;margin-inline-end:6px}
+.ev.attention{background:rgba(240,163,90,.07)}
+.ev.attention .a:before{content:"⚠️ "}
+footer{color:var(--mut);text-align:center;font-size:12.5px;padding:20px}
+@media(max-width:560px){.ev{grid-template-columns:1fr}.ev .t{order:-1}}
+</style>
+</head>
+<body>
+<header>
+  <img src="logo.png" alt="Fly Dent">
+  <h1>צוות הסוכנים של Fly Dent Dubai</h1>
+  <div class="sub" id="upd">טוען…</div>
+</header>
+<div class="wrap">
+  <div class="stats" id="stats"></div>
+  <h2>הסוכנים</h2>
+  <div class="grid" id="agents"></div>
+  <h2>יומן פעילות</h2>
+  <div class="log" id="log"></div>
+</div>
+<footer>מתעדכן אוטומטית כל בוקר על ידי המנהל-על · בלי פרטי מטופלים</footer>
+<script>
+const fmt = s => { if(!s) return "—"; const d = new Date(s); if(isNaN(d)) return s;
+  return d.toLocaleString("he-IL",{timeZone:"Asia/Jerusalem",day:"numeric",month:"numeric",hour:"2-digit",minute:"2-digit"}); };
+const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cls = st => /הושלם|פעיל/.test(st) ? "s-ok" : /ממתין לאישור|שגיאה|תקלה/.test(st) ? "s-warn" : "s-idle";
+Promise.all([fetch("data/agents.json?"+Date.now()).then(r=>r.json()), fetch("data/activity.json?"+Date.now()).then(r=>r.json())])
+.then(([ag, ac]) => {
+  document.getElementById("upd").textContent = "עודכן: " + fmt(ac.updated);
+  const done = ag.filter(a=>/הושלם/.test(a.status)).length;
+  const att = ac.items.filter(e=>e.level==="attention").length;
+  document.getElementById("stats").innerHTML =
+    `<div class="stat"><b>${ag.length}</b><span>סוכנים</span></div>`+
+    `<div class="stat"><b>${done}</b><span>סיימו את הריצה האחרונה</span></div>`+
+    `<div class="stat"><b>${ac.items.length}</b><span>פעולות אחרונות</span></div>`+
+    `<div class="stat"><b>${att}</b><span>דורש תשומת לב</span></div>`;
+  document.getElementById("agents").innerHTML = ag.map(a => `
+    <div class="ag"><div class="top"><span class="em">${esc(a.emoji)}</span><span class="nm">${esc(a.name)}</span>
+    <span class="pill ${cls(a.status)}">${esc(a.status)}</span></div>
+    <div class="role">${esc(a.role)}</div>
+    <div class="row"><i>אחרון:</i> ${esc(a.last_result||"—")}</div>
+    <div class="row"><i>הבא:</i> ${esc(a.next_task||"—")}</div>
+    <div class="when">${esc(a.cadence)} · ריצה אחרונה ${fmt(a.last_run)}</div></div>`).join("");
+  document.getElementById("log").innerHTML = ac.items.map(e => `
+    <div class="ev ${e.level}"><div class="t">${fmt(e.at)}</div><div><span class="a">${esc(e.agent)}</span>${esc(e.action)}</div></div>`).join("");
+}).catch(() => { document.getElementById("upd").textContent = "לא ניתן לטעון את הנתונים כרגע"; });
+</script>
+</body>
+</html>
