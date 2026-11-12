@@ -78,6 +78,29 @@ h2{font-size:20px;color:var(--gold);margin:30px 0 10px;border-bottom:1px solid v
 .comp .bar .fl{height:100%;border-radius:999px;background:linear-gradient(90deg,#8a6a2c,#f7dfa0)}
 .comp .bar.me .fl{background:linear-gradient(90deg,#2f8f5a,#7fe0a8)}
 .comp .note{color:var(--mut);font-size:13px;line-height:1.6}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.kpi .l{color:var(--mut);font-size:13px}
+.kpi .v{font-size:28px;font-weight:900;color:var(--gold2);margin:2px 0}
+.kpi .c{font-size:12.5px}
+.up{color:var(--ok)}.dn{color:#ff7b6b}.fl0{color:var(--mut)}
+.att{background:rgba(240,163,90,.08);border:1px solid #6b4a1e;border-radius:16px;padding:6px 14px}
+.att .it{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed #4a3416;font-size:14.5px}
+.att .it:last-child{border-bottom:none}
+.att .it b{color:var(--warn)}
+.att .ok{color:var(--ok);padding:12px 0}
+.grp{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:10px}
+.grp h3{margin:0 0 6px;font-size:16px}
+.grp .tag{display:inline-block;border:1px solid #8a6a2c;color:var(--gold);border-radius:999px;padding:2px 12px;font-size:12.5px;margin-bottom:8px}
+.grp .row{font-size:13.5px;margin:3px 0}
+.grp details summary{cursor:pointer;color:var(--gold);margin-top:6px;font-size:14px}
+.grp pre{white-space:pre-wrap;font-family:inherit;background:#0d0a06;border:1px solid #2a2010;border-radius:12px;padding:12px;font-size:14px;line-height:1.6}
+.grp .cp{background:linear-gradient(180deg,#f7dfa0,#c9962e);color:#1c1204;border:none;border-radius:999px;padding:6px 16px;font:inherit;font-weight:800;cursor:pointer}
+.gbars{display:flex;align-items:center;gap:2px;height:120px;direction:ltr;margin-top:8px}
+.gbars .col{flex:1;display:flex;flex-direction:column;justify-content:center;height:100%;position:relative}
+.gbars .g{background:#4f8cff;border-radius:2px 2px 0 0;align-self:stretch}
+.gbars .lz{background:#e5484d;border-radius:0 0 2px 2px;align-self:stretch}
 footer{color:var(--mut);text-align:center;font-size:12.5px;padding:20px}
 @media(max-width:560px){.ev{grid-template-columns:40px 1fr;grid-template-areas:"av t" "tx tx";gap:6px 10px}.ev .mini{grid-area:av}.ev .t{grid-area:t}.ev .tx{grid-area:tx}.comp .bar{grid-template-columns:96px 1fr 56px}.office{grid-template-columns:repeat(2,1fr)}.av{width:96px;height:96px}}
 </style>
@@ -90,11 +113,21 @@ footer{color:var(--mut);text-align:center;font-size:12.5px;padding:20px}
 </header>
 <div class="wrap">
   <div class="stats" id="stats"></div>
+  <h2>⚠️ דורש תשומת לב</h2>
+  <div class="att" id="att"></div>
+  <h2>ביצועי סושיאל – 14 הימים האחרונים מול 14 הקודמים</h2>
+  <div class="kpis" id="kpis"></div>
+  <h2>צמיחת עוקבים – 30 הימים האחרונים</h2>
+  <div class="kpis" id="growth"></div>
+  <div class="ch" style="margin-top:12px"><h3>📸 אינסטגרם – נכנסו / יצאו ביום</h3><div class="gbars" id="gb_ig"></div><div class="legend"><span><i style="background:#4f8cff"></i>נכנסו</span><span><i style="background:#e5484d"></i>יצאו</span></div></div>
   <h2>חשיפות וצפיות</h2>
   <div class="filters" id="range"><button data-r="30">30 יום</button><button data-r="90">3 חודשים</button><button data-r="365" class="on">שנה</button></div>
   <div class="charts" id="charts"></div>
   <h2>מול המתחרים</h2>
   <div class="comp" id="comp"></div>
+  <h2>קבוצות פייסבוק – טיוטות מוכנות</h2>
+  <div class="note" style="color:var(--mut);font-size:13.5px;margin:-4px 0 10px">סוכן צמיחת העוקבים מכין את הטיוטות, ואתה מאשר. לא יותר מ-2–3 קבוצות ביום, וכל טקסט פעם אחת בלבד. כדאי לבדוק את חוקי הקבוצה לפני שמפרסמים.</div>
+  <div id="groups"></div>
   <h2>הסוכנים</h2>
   <div class="filters" id="filters">
     <button data-f="all" class="on">כולם</button>
@@ -227,8 +260,40 @@ function drawCharts(){
 }
 document.getElementById("range").onclick = e => { const b=e.target.closest("button"); if(!b||!MET) return;
   document.querySelectorAll("#range button").forEach(x=>x.classList.toggle("on",x===b)); RANGE=+b.dataset.r; drawCharts(); };
-fetch("data/metrics.json?"+Date.now()).then(r=>r.json()).then(m=>{ MET=m; drawCharts(); renderComp(m); })
+fetch("data/metrics.json?"+Date.now()).then(r=>r.json()).then(m=>{ MET=m; drawCharts(); renderComp(m); renderKpis(m); })
  .catch(()=>{ document.getElementById("charts").innerHTML='<div class="ch">אין נתוני חשיפה כרגע</div>'; });
+
+// ---------- attention / KPIs / growth / groups ----------
+const sum=(a,k)=>{const v=a.map(x=>x[k]).filter(x=>x!=null);return v.length?v.reduce((p,c)=>p+c,0):null;};
+const pct=(a,b)=>{ if(a==null||b==null) return '<span class="fl0">אין תקופה קודמת להשוואה</span>'; if(b===0) return a>0?'<span class="up">חדש</span>':'<span class="fl0">0</span>';
+  const p=Math.round((a-b)*100/b); return `<span class="${p>0?"up":p<0?"dn":"fl0"}">${p>0?"+":""}${p}% לעומת 14 הימים הקודמים</span>`; };
+function renderKpis(m){
+  const d=m.days, a=d.slice(-14), b=d.slice(-28,-14);
+  const last=(k)=>{const x=d.filter(y=>y[k]!=null).slice(-1)[0];return x?x[k]:null;};
+  const before=(k)=>{const x=d.slice(0,-14).filter(y=>y[k]!=null).slice(-1)[0];return x?x[k]:null;};
+  const fol=(k,n)=>{const v=last(k),p=before(k);return {l:n,v,c:p==null?'<span class="fl0">אין תקופה קודמת להשוואה</span>':`<span class="${v-p>0?"up":v-p<0?"dn":"fl0"}">${v-p>0?"+":""}${v-p} לעומת לפני 14 יום</span>`};};
+  const items=[fol("ig_followers","עוקבים באינסטגרם"),{l:"חשיפה באינסטגרם (אנשים)",v:sum(a,"ig_reach"),c:pct(sum(a,"ig_reach"),sum(b,"ig_reach"))},
+    {l:"צפיות באינסטגרם",v:sum(a,"ig_views"),c:pct(sum(a,"ig_views"),sum(b,"ig_views"))},{l:"אינטראקציות באינסטגרם",v:sum(a,"ig_interactions"),c:pct(sum(a,"ig_interactions"),sum(b,"ig_interactions"))},
+    fol("fb_followers","עוקבים בפייסבוק"),{l:"צפיות בתוכן בפייסבוק",v:sum(a,"fb_views"),c:pct(sum(a,"fb_views"),sum(b,"fb_views"))}];
+  document.getElementById("kpis").innerHTML=items.map(i=>`<div class="kpi"><div class="l">${i.l}</div><div class="v">${i.v==null?"—":i.v.toLocaleString("he-IL")}</div><div class="c">${i.c}</div></div>`).join("");
+  const g=d.slice(-30), ig=[sum(g,"ig_gained"),sum(g,"ig_lost")], fb=[sum(g,"fb_gained"),sum(g,"fb_lost")];
+  const net=(x)=>x[0]==null||x[1]==null?null:x[0]-x[1];
+  const nv=(v)=>v==null?"—":`<span class="${v>0?"up":v<0?"dn":"fl0"}">${v>0?"+":""}${v}</span>`;
+  document.getElementById("growth").innerHTML=[["אינסטגרם – נכנסו",ig[0]],["אינסטגרם – יצאו",ig[1]],["אינסטגרם – נטו",null,net(ig)],["פייסבוק – נכנסו",fb[0]],["פייסבוק – יצאו",fb[1]],["פייסבוק – נטו",null,net(fb)]]
+    .map(([l,v,n])=>`<div class="kpi"><div class="l">${l}</div><div class="v">${n!==undefined?nv(n):(v==null?"—":v)}</div></div>`).join("");
+  const mx=Math.max(1,...g.map(x=>Math.max(x.ig_gained||0,x.ig_lost||0)));
+  document.getElementById("gb_ig").innerHTML=g.map(x=>`<div class="col" title="${x.d}: +${x.ig_gained??0} / −${x.ig_lost??0}"><div style="height:50%;display:flex;align-items:flex-end"><div class="g" style="width:100%;height:${100*(x.ig_gained||0)/mx}%"></div></div><div style="height:50%"><div class="lz" style="height:${100*(x.ig_lost||0)/mx}%"></div></div></div>`).join("");
+}
+function renderAtt(items){
+  const a=items.filter(e=>e.level==="attention");
+  document.getElementById("att").innerHTML = a.length ? a.map(e=>`<div class="it"><span>⚠️</span><div><b>${esc(clean(e.agent))}</b> · <span style="color:var(--mut);font-size:12.5px">${fmt(e.at)}</span><br>${esc(e.action)}</div></div>`).join("") : '<div class="ok">✅ אין כרגע משהו שדורש טיפול</div>';
+}
+fetch("data/fb_groups.json?"+Date.now()).then(r=>r.json()).then(gs=>{
+  document.getElementById("groups").innerHTML = gs.map((g,i)=>`<div class="grp"><h3>${esc(g.category)}</h3><span class="tag">${esc(g.status||"")}</span>
+   <div class="row"><b style="color:var(--gold)">חיפוש בפייסבוק:</b> ${esc(g.search)}</div><div class="row"><b style="color:var(--gold)">למה:</b> ${esc(g.why)}</div>
+   <details><summary>טיוטת פוסט</summary><pre id="gd${i}">${esc(g.draft)}</pre><button class="cp" onclick="navigator.clipboard.writeText(document.getElementById('gd${i}').innerText).then(()=>{this.textContent='הועתק ✓'})">העתק טקסט</button></details></div>`).join("");
+}).catch(()=>{});
+
 // ---------- data ----------
 const fmt = s => { if(!s) return "—"; const d = new Date(s); if(isNaN(d)) return s;
   return d.toLocaleString("he-IL",{timeZone:"Asia/Jerusalem",day:"numeric",month:"numeric",hour:"2-digit",minute:"2-digit"}); };
@@ -260,7 +325,7 @@ document.getElementById("filters").onclick = e => { const b = e.target.closest("
   document.querySelectorAll(".desk").forEach(d => d.classList.toggle("hide", b.dataset.f!=="all" && d.dataset.k!==b.dataset.f)); };
 Promise.all([fetch("data/agents.json?"+Date.now()).then(r=>r.json()), fetch("data/activity.json?"+Date.now()).then(r=>r.json())])
 .then(([ag, ac]) => {
-  AG = ag; EV = ac.items;
+  AG = ag; EV = ac.items; renderAtt(EV);
   document.getElementById("upd").textContent = "עודכן: " + fmt(ac.updated) + " · לחצו על סוכן כדי לראות מה הוא עושה";
   const c = {ok:0,warn:0,idle:0}; ag.forEach(a=>c[kind(a.status)]++);
   const att = EV.filter(e=>e.level==="attention").length;
