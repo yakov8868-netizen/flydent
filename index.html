@@ -90,7 +90,8 @@ footer{color:var(--mut);text-align:center;font-size:12.5px;padding:20px}
 </header>
 <div class="wrap">
   <div class="stats" id="stats"></div>
-  <h2>חשיפות וצפיות – 30 הימים האחרונים</h2>
+  <h2>חשיפות וצפיות</h2>
+  <div class="filters" id="range"><button data-r="30">30 יום</button><button data-r="90">3 חודשים</button><button data-r="365" class="on">שנה</button></div>
   <div class="charts" id="charts"></div>
   <h2>מול המתחרים</h2>
   <div class="comp" id="comp"></div>
@@ -181,7 +182,7 @@ function lineChart(el, days, series, title){
   const x = i => P.l + i*(W-P.l-P.r)/Math.max(1,n-1), y = v => H-P.b - v*(H-P.t-P.b)/max;
   let g = "";
   for(let k=0;k<=4;k++){ const v=Math.round(max*k/4), yy=y(v); g += `<line x1="${P.l}" x2="${W-P.r}" y1="${yy}" y2="${yy}" stroke="#2a2010"/><text x="${P.l-6}" y="${yy+4}" fill="#8a7b60" font-size="11" text-anchor="end">${v}</text>`; }
-  days.forEach((d,i)=>{ if(i%5===0||i===n-1) g += `<text x="${x(i)}" y="${H-6}" fill="#8a7b60" font-size="11" text-anchor="middle">${d.d}</text>`; });
+  const step=Math.max(1,Math.round(n/6)); days.forEach((d,i)=>{ if(i%step===0||i===n-1) g += `<text x="${x(i)}" y="${H-6}" fill="#8a7b60" font-size="11" text-anchor="middle">${d.d}</text>`; });
   let paths = "";
   series.forEach(s=>{ let dd="", on=false, area="";
     days.forEach((d,i)=>{ const v=d[s.k]; if(v==null){on=false;return;} dd += (on?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1); on=true; });
@@ -203,21 +204,31 @@ function lineChart(el, days, series, title){
 function renderComp(m){
   const el = document.getElementById("comp"), c = m.competitors||[];
   const me = m.days.filter(d=>d.ig_followers!=null).slice(-1)[0];
-  if(!c.length){ el.innerHTML = `<div class="note">📊 ההשוואה למתחרים תופיע כאן ברגע שיוגדרו מתחרים ב-Metricool (עוקבים, כמות רילסים ופוסטים, לייקים ממוצעים ומעורבות).<br>חשוב לדעת: מספר החשיפות של חשבון אחר הוא מידע פרטי של אותו חשבון ואי אפשר לראות אותו – לכן ההשוואה היא לפי הנתונים הציבוריים.<br><br>אצלנו כרגע: <b style="color:var(--gold2)">${me?me.ig_followers.toLocaleString("he-IL"):"—"}</b> עוקבים באינסטגרם.</div>`; return; }
-  const all = [{name:"Fly Dent (אנחנו)", followers: me?me.ig_followers:0, me:1}, ...c].sort((a,b)=>b.followers-a.followers);
+  const measured = c.filter(x=>x.followers!=null), pending = c.filter(x=>x.followers==null);
+  const all = [{name:"Fly Dent (אנחנו)", followers: me?me.ig_followers:0, me:1}, ...measured].sort((a,b)=>b.followers-a.followers);
   const mx = Math.max(...all.map(a=>a.followers||0),1);
   el.innerHTML = `<div class="note">עוקבים באינסטגרם</div>` + all.map(a=>`<div class="bar ${a.me?"me":""}"><span>${esc(a.name)}</span><div class="tr"><div class="fl" style="width:${(100*(a.followers||0)/mx).toFixed(1)}%"></div></div><b>${(a.followers||0).toLocaleString("he-IL")}</b></div>`).join("")+
-   (c.some(x=>x.engagement!=null)?`<div class="note" style="margin-top:12px">מעורבות (אינטראקציות ל-1,000 עוקבים)</div>`+c.map(a=>`<div class="bar"><span>${esc(a.name)}</span><div class="tr"><div class="fl" style="width:${Math.min(100,(a.engagement||0)).toFixed(1)}%"></div></div><b>${a.engagement??"—"}</b></div>`).join(""):"")+
-   `<div class="note" style="margin-top:10px">חשיפות של מתחרים אינן ציבוריות; ההשוואה לפי נתונים ציבוריים בלבד.</div>`;
+   (pending.length?`<div class="note" style="margin-top:12px">מתחרים שזוהו ונמצאים בבדיקה (המספרים יתווספו אוטומטית):</div>`+pending.map(a=>`<div class="bar"><span>${esc(a.name)}</span><span class="note">${esc(a.market||"")}</span><b>⏳</b></div>`).join(""):"")+
+   `<div class="note" style="margin-top:10px">כל מתחרה חדש שהסוכנים רואים נוסף לכאן אוטומטית. חשיפות של מתחרים אינן ציבוריות – ההשוואה לפי עוקבים ונתונים ציבוריים בלבד.</div>`;
 }
-fetch("data/metrics.json?"+Date.now()).then(r=>r.json()).then(m=>{
-  const box = document.getElementById("charts");
+let MET=null, RANGE=365;
+function series(days, r){
+  const d = days.slice(-r);
+  if (r <= 90) return d;
+  const out=[]; for(let i=0;i<d.length;i+=7){ const w=d.slice(i,i+7), s=k=>{const a=w.map(x=>x[k]).filter(v=>v!=null); return a.length?a.reduce((p,c)=>p+c,0):null;};
+    out.push({d:w[0].d, ig_views:s("ig_views"), ig_reach:s("ig_reach"), fb_views:s("fb_views")}); }
+  return out;
+}
+function drawCharts(){
+  const box = document.getElementById("charts"), d = series(MET.days, RANGE), wk = RANGE>90 ? " (סיכום שבועי)" : "";
   box.innerHTML = `<div class="ch" id="c1"></div><div class="ch" id="c2"></div>`;
-  lineChart(document.getElementById("c1"), m.days, [{k:"ig_views",n:"צפיות",c:"#f7dfa0"},{k:"ig_reach",n:"חשיפה (אנשים)",c:"#c9962e"}], "📸 אינסטגרם");
-  lineChart(document.getElementById("c2"), m.days, [{k:"fb_views",n:"צפיות בתוכן",c:"#7fb0ff"}], "📘 פייסבוק");
-  renderComp(m);
-}).catch(()=>{ document.getElementById("charts").innerHTML='<div class="ch">אין נתוני חשיפה כרגע</div>'; });
-
+  lineChart(document.getElementById("c1"), d, [{k:"ig_views",n:"צפיות",c:"#f7dfa0"},{k:"ig_reach",n:"חשיפה (אנשים)",c:"#c9962e"}], "📸 אינסטגרם"+wk);
+  lineChart(document.getElementById("c2"), d, [{k:"fb_views",n:"צפיות בתוכן",c:"#7fb0ff"}], "📘 פייסבוק"+wk);
+}
+document.getElementById("range").onclick = e => { const b=e.target.closest("button"); if(!b||!MET) return;
+  document.querySelectorAll("#range button").forEach(x=>x.classList.toggle("on",x===b)); RANGE=+b.dataset.r; drawCharts(); };
+fetch("data/metrics.json?"+Date.now()).then(r=>r.json()).then(m=>{ MET=m; drawCharts(); renderComp(m); })
+ .catch(()=>{ document.getElementById("charts").innerHTML='<div class="ch">אין נתוני חשיפה כרגע</div>'; });
 // ---------- data ----------
 const fmt = s => { if(!s) return "—"; const d = new Date(s); if(isNaN(d)) return s;
   return d.toLocaleString("he-IL",{timeZone:"Asia/Jerusalem",day:"numeric",month:"numeric",hour:"2-digit",minute:"2-digit"}); };
