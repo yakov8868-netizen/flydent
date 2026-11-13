@@ -1,0 +1,64 @@
+name: Sync agent data from Drive
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: sync-data
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download newest data bundle from the public Drive folder
+        env:
+          FOLDER_ID: 1OV23HyRkxeFj4ngs81iD-QJ5jiiLJv7W
+        run: |
+          python3 - <<'PY'
+          import json, os, re, urllib.request
+          folder = os.environ["FOLDER_ID"]
+          ua = {"User-Agent": "Mozilla/5.0"}
+          def get(url):
+              return urllib.request.urlopen(urllib.request.Request(url, headers=ua), timeout=60).read()
+          html = get("https://drive.google.com/embeddedfolderview?id=" + folder).decode("utf-8", "replace")
+          entries = re.findall(r'id="entry-([A-Za-z0-9_-]+)".*?class="flip-entry-title">([^<]+)<', html, re.S)
+          files = sorted((t, i) for i, t in entries if re.fullmatch(r"site_data_\d{12}\.json", t.strip()))
+          if not files:
+              print("No data bundle found in the folder"); raise SystemExit(0)
+          title, fid = files[-1]
+          print("Using", title.strip())
+          bundle = json.loads(get("https://drive.google.com/uc?export=download&id=" + fid))
+          for name, content in bundle.items():
+              if not re.fullmatch(r"[a-z_]+\.json", name):
+                  print("Skipping unexpected name", name); continue
+              with open(os.path.join("data", name), "w", encoding="utf-8") as f:
+                  json.dump(content, f, ensure_ascii=False, indent=1)
+          PY
+
+      - name: Commit and push when something changed
+        id: commit
+        run: |
+          git add data/*.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"; echo "No changes"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Sync agent data from Drive"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Rebuild GitHub Pages
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
