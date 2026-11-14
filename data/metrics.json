@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T06:52:53.330153+00:00",
+ "updated": "2026-11-14T06:51:52.327937+00:00",
  "days": [
   {
    "d": "13.11.25",
@@ -5047,7 +5047,7 @@
    "ig_reach": 58,
    "ig_views": 102,
    "ig_followers": 5088,
-   "fb_views": 128,
+   "fb_views": 143,
    "fb_followers": 290,
    "ig_interactions": 4,
    "ig_gained": 1,
@@ -5100,10 +5100,24 @@
   {
    "d": "12.11.26",
    "iso": "2026-11-12",
-   "ig_reach": 106,
-   "ig_views": 295,
-   "ig_followers": null,
+   "ig_reach": 95,
+   "ig_views": 398,
+   "ig_followers": 5088,
    "fb_views": 47,
+   "fb_followers": 290,
+   "ig_interactions": null,
+   "ig_gained": 1,
+   "ig_lost": 4,
+   "fb_gained": 0,
+   "fb_lost": 0
+  },
+  {
+   "d": "13.11.26",
+   "iso": "2026-11-13",
+   "ig_reach": 95,
+   "ig_views": 150,
+   "ig_followers": null,
+   "fb_views": 49,
    "fb_followers": 290,
    "ig_interactions": null,
    "ig_gained": null,
