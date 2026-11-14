@@ -202,5 +202,53 @@
   "added": "2026-11-14",
   "fb_page": null,
   "fb_followers": null
+ },
+ {
+  "name": "Premium Dentravel IL · פרמיום דנטראוול",
+  "market": "אלבניה",
+  "handle": "premium_dentravel.il",
+  "followers": 314,
+  "posts": 29,
+  "fb_page": "https://www.facebook.com/profile.php?id=61591733870126",
+  "fb_followers": 58,
+  "as_of": "2026-11-14",
+  "source": "חיפוש פוסטים בפייסבוק 'טיפולי שיניים בחו״ל'",
+  "added": "2026-11-14"
+ },
+ {
+  "name": "Luxterman Dental Clinic",
+  "market": "גאורגיה (טביליסי)",
+  "handle": "luxterman_clinic",
+  "followers": 0,
+  "posts": 6,
+  "fb_page": "https://www.facebook.com/luxterman",
+  "fb_followers": 4,
+  "as_of": "2026-11-14",
+  "source": "חיפוש פוסטים בפייסבוק 'השתלות שיניים בחול'",
+  "added": "2026-11-14"
+ },
+ {
+  "name": "Ella Medical · אלה מדיקל",
+  "market": "גאורגיה",
+  "handle": "ella_medical",
+  "followers": 617,
+  "posts": 164,
+  "fb_page": "https://www.facebook.com/ellamedicalil",
+  "fb_followers": 327,
+  "as_of": "2026-11-14",
+  "source": "חיפוש פוסטים בפייסבוק 'שיקום פה המלצה'",
+  "added": "2026-11-14"
+ },
+ {
+  "name": "Dubai Dent · דובאי דנט",
+  "market": "דובאי",
+  "handle": "dubaidentt",
+  "followers": 758,
+  "posts": 94,
+  "fb_page": "https://www.facebook.com/profile.php?id=61574417188378",
+  "fb_followers": 255,
+  "as_of": "2026-11-14",
+  "source": "חיפוש פוסטים בפייסבוק 'השתלות שיניים דובאי'",
+  "added": "2026-11-14"
  }
 ]
