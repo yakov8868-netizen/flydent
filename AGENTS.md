@@ -17,5 +17,7 @@
 - Any agent that sees a competitor (Israeli-market dental tourism / Dubai, Turkey, Georgia etc. clinics or agencies targeting Israelis) appends it:
   {"name","market","handle" (Instagram, null if unknown),"followers":null,"posts":null,"fb_page" (Facebook page URL/name, null if unknown),"fb_followers":null,"as_of":null,"source","added":"YYYY-MM-DD"}.
   Never duplicate (match by name or handle). Never delete entries. Never invent numbers.
+- NOT competitors — the owner's own clinics (user 14.11.2026): TOP Medical (טופ מדיקל, Ashdod) and Art Clinic (Rishon LeZion).
+  They serve patients who want treatment in Israel. Never add them to competitors.json and never describe them as competitors.
 - The evening task (user's Chrome) fills handle/followers/posts from the public Instagram profile AND fb_page/fb_followers from the public Facebook page, plus as_of.
 - build_metrics.py reads data/competitors.json automatically; commit it together with data/*.json.
