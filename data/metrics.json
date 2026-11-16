@@ -1,20 +1,6 @@
 {
- "updated": "2026-11-15T06:57:05.502148+00:00",
+ "updated": "2026-11-16T06:51:53.889101+00:00",
  "days": [
-  {
-   "d": "14.11.25",
-   "iso": "2025-11-14",
-   "ig_reach": null,
-   "ig_views": 39,
-   "ig_followers": null,
-   "fb_views": null,
-   "fb_followers": null,
-   "ig_interactions": null,
-   "ig_gained": null,
-   "ig_lost": null,
-   "fb_gained": null,
-   "fb_lost": null
-  },
   {
    "d": "15.11.25",
    "iso": "2025-11-15",
@@ -4979,7 +4965,7 @@
    "ig_followers": 5092,
    "fb_views": 58,
    "fb_followers": 290,
-   "ig_interactions": 4,
+   "ig_interactions": 5,
    "ig_gained": 1,
    "ig_lost": 1,
    "fb_gained": 0,
@@ -5061,7 +5047,7 @@
    "ig_reach": 51,
    "ig_views": 139,
    "ig_followers": 5090,
-   "fb_views": 54,
+   "fb_views": 70,
    "fb_followers": 290,
    "ig_interactions": 3,
    "ig_gained": 0,
@@ -5101,7 +5087,7 @@
    "d": "13.11.26",
    "iso": "2026-11-13",
    "ig_reach": 102,
-   "ig_views": 74,
+   "ig_views": 170,
    "ig_followers": 5087,
    "fb_views": 49,
    "fb_followers": 290,
@@ -5114,12 +5100,26 @@
   {
    "d": "14.11.26",
    "iso": "2026-11-14",
-   "ig_reach": 48,
-   "ig_views": 74,
-   "ig_followers": null,
+   "ig_reach": 60,
+   "ig_views": 87,
+   "ig_followers": 5086,
    "fb_views": 156,
    "fb_followers": 290,
    "ig_interactions": 4,
+   "ig_gained": 0,
+   "ig_lost": 0,
+   "fb_gained": 0,
+   "fb_lost": 0
+  },
+  {
+   "d": "15.11.26",
+   "iso": "2026-11-15",
+   "ig_reach": 49,
+   "ig_views": 87,
+   "ig_followers": null,
+   "fb_views": 60,
+   "fb_followers": 290,
+   "ig_interactions": 3,
    "ig_gained": null,
    "ig_lost": null,
    "fb_gained": 0,
@@ -5378,6 +5378,18 @@
    "as_of": "2026-11-14",
    "source": "חיפוש פוסטים בפייסבוק 'השתלות שיניים דובאי'",
    "added": "2026-11-14"
+  },
+  {
+   "name": "ד\"ר חן · Dr. Hen",
+   "market": "טורקיה, רומניה, גאורגיה, מולדובה (חבילות לישראלים)",
+   "handle": null,
+   "followers": null,
+   "posts": null,
+   "as_of": null,
+   "source": "kipa.co.il – תוכן שיווקי; dr-hen.co.il",
+   "added": "2026-11-16",
+   "fb_page": null,
+   "fb_followers": null
   }
  ]
 }
