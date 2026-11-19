@@ -15,9 +15,9 @@
   "name": "Dubadent",
   "market": "דובאי",
   "handle": "duba_dent",
-  "followers": 813,
+  "followers": 814,
   "posts": 14,
-  "as_of": "2026-11-17",
+  "as_of": "2026-11-19",
   "source": "פלאייר מתחרה שנשלח ב-12.11",
   "added": "2026-11-12",
   "fb_page": "https://www.facebook.com/profile.php?id=61590318671178",
@@ -39,9 +39,9 @@
   "name": "DTC Clinic · טיפולי שיניים בחו״ל",
   "market": "טיפולי שיניים בחו״ל (רופא שיניים אסתטי)",
   "handle": "dtclinics",
-  "followers": 2658,
-  "posts": 392,
-  "as_of": "2026-11-16",
+  "followers": 2661,
+  "posts": 393,
+  "as_of": "2026-11-19",
   "source": "המשתמש שלח ב-13.11 · עמוד פייסבוק, מריץ מודעות ממומנות",
   "added": "2026-11-13",
   "fb_page": "https://www.facebook.com/dtcclinic",
@@ -247,7 +247,7 @@
   "posts": 94,
   "fb_page": "https://www.facebook.com/profile.php?id=61574417188378",
   "fb_followers": 255,
-  "as_of": "2026-11-17",
+  "as_of": "2026-11-19",
   "source": "חיפוש פוסטים בפייסבוק 'השתלות שיניים דובאי'",
   "added": "2026-11-14"
  },
@@ -274,5 +274,29 @@
   "as_of": "2026-11-17",
   "source": "חיפוש פוסטים בפייסבוק 'טיפולי שיניים בחו״ל' 16.11",
   "added": "2026-11-16"
+ },
+ {
+  "name": "מדיקל · טיפולי שיניים בגאורגיה",
+  "market": "גאורגיה (טביליסי)",
+  "handle": null,
+  "followers": null,
+  "posts": null,
+  "fb_page": "https://www.facebook.com/profile.php?id=100083038433342",
+  "fb_followers": 808,
+  "as_of": "2026-11-19",
+  "source": "חיפוש פוסטים בפייסבוק 'שיקום פה המלצה' 19.11",
+  "added": "2026-11-19"
+ },
+ {
+  "name": "Crown Clinic · קראון קליניק",
+  "market": "גאורגיה · ליווי לישראלים",
+  "handle": null,
+  "followers": null,
+  "posts": null,
+  "fb_page": "https://www.facebook.com/mb.crown.clinic",
+  "fb_followers": 320,
+  "as_of": "2026-11-19",
+  "source": "חיפוש פוסטים בפייסבוק 'רופא שיניים בחו״ל' 19.11",
+  "added": "2026-11-19"
  }
 ]
