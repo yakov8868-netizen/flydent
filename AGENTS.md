@@ -8,6 +8,7 @@
 4. Competitors from Metricool (optional): ["IGCO02","IGCO03","IGCO07","IGCO08","IGCO12","IGCO09","IGCO10"] for the last 30 days.
    If rows come back, MERGE them into data/competitors.json (match by handle; update followers/posts/as_of; append new ones). Never delete entries. Never invent numbers.
 5. `python3 tools/build_metrics.py /tmp/metrics_rows.json /tmp/extra_rows.json`  (history is kept automatically)
+6a. Approvals: copy the dashboard dataset "approvals" (read_asset) to data/approvals.json, keeping only id, order, type, item, details, since (NO links — the site is public; an upload link there would let anyone upload into the ad account).
 6. Facebook group drafts: copy the dashboard dataset "fb_groups" (read_asset) to data/fb_groups.json when it changed.
 7. Privacy check on data/*.json: no patient names, emails, phone numbers other than 03-6135444, card/payment numbers, ad-account ids or internal URLs.
    Attention items may mention a topic ("חשבון המודעות מושהה – לבדוק חיוב") but never account numbers or amounts.

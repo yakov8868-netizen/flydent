@@ -113,6 +113,8 @@ footer{color:var(--mut);text-align:center;font-size:12.5px;padding:20px}
 </header>
 <div class="wrap">
   <div class="stats" id="stats"></div>
+  <h2>✅ ממתין לאישור או לפעולה שלך</h2>
+  <div class="att" id="appr"></div>
   <h2>⚠️ דורש תשומת לב</h2>
   <div class="att" id="att"></div>
   <h2>ביצועי סושיאל – 14 הימים האחרונים מול 14 הקודמים</h2>
@@ -288,8 +290,12 @@ function renderKpis(m){
 }
 function renderAtt(items){
   const a=items.filter(e=>e.level==="attention");
-  document.getElementById("att").innerHTML = a.length ? a.map(e=>`<div class="it"><span>⚠️</span><div><b>${esc(clean(e.agent))}</b> · <span style="color:var(--mut);font-size:12.5px">${fmt(e.at)}</span><br>${esc(e.action)}</div></div>`).join("") : '<div class="ok">✅ אין כרגע משהו שדורש טיפול</div>';
+  document.getElementById("att").innerHTML = a.length ? a.map((e,i)=>`<div class="it"><span><b>${i+1}.</b> ⚠️</span><div><b>${esc(clean(e.agent))}</b> · <span style="color:var(--mut);font-size:12.5px">${fmt(e.at)}</span><br>${esc(e.action)}</div></div>`).join("") : '<div class="ok">✅ אין כרגע משהו שדורש טיפול</div>';
 }
+fetch("data/approvals.json?"+Date.now()).then(r=>r.json()).then(ap=>{
+  const rows=(Array.isArray(ap)?ap:[]).slice().sort((p,q)=>Number(p.order)-Number(q.order));
+  document.getElementById("appr").innerHTML = rows.length ? rows.map((r,i)=>`<div class="it"><span><b>${i+1}.</b> ${r.type==="אישור"?"🟡":"🔴"}</span><div><b>${esc(r.item)}</b> · <span style="color:var(--mut);font-size:12.5px">${r.type==="אישור"?"לאישורך":"משימה שלך"}${r.since?" · מחכה מ-"+esc(String(r.since).slice(8,10)+"."+String(r.since).slice(5,7)):""}</span><br>${esc(r.details)}</div></div>`).join("") : '<div class="ok">✅ אין כרגע משהו שמחכה לך</div>';
+}).catch(()=>{ document.getElementById("appr").innerHTML='<div class="ok">—</div>'; });
 fetch("data/fb_groups.json?"+Date.now()).then(r=>r.json()).then(gs=>{
   document.getElementById("groups").innerHTML = gs.map((g,i)=>`<div class="grp"><h3>${esc(g.category)}</h3><span class="tag">${esc(g.status||"")}</span>
    <div class="row"><b style="color:var(--gold)">חיפוש בפייסבוק:</b> ${esc(g.search)}</div><div class="row"><b style="color:var(--gold)">למה:</b> ${esc(g.why)}</div>
