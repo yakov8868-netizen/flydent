@@ -26,5 +26,96 @@
   "group_url": "https://www.facebook.com/groups/829012060965861",
   "status": "excluded",
   "note": "rules forbid self-promotion"
+ },
+ {
+  "date": "2026-11-19",
+  "group_name": "גימלאי ישראל בני 60 פלוס",
+  "group_url": "https://www.facebook.com/groups/4142384092514222",
+  "status": "posted",
+  "note": "found on 22.11: Fly Dent post from 19.11 (not previously logged) still pending admin approval – 'how dental treatment abroad works'"
+ },
+ {
+  "date": "2026-11-19",
+  "group_name": "גיל 50...וקצת טיפים. לחיים",
+  "group_url": "https://www.facebook.com/groups/828161851465022",
+  "status": "posted",
+  "note": "found on 22.11: Fly Dent post from 19.11 (not previously logged) still pending admin approval – '5 questions before implants'"
+ },
+ {
+  "date": "2026-11-22",
+  "group_name": "הגיל השלישי במקום הראשון",
+  "group_url": "https://www.facebook.com/groups/gilshlishi",
+  "status": "posted",
+  "note": "9.6K members; description invites sharing services for 60+; joined as page, post published live – 'what full-mouth rehab package at ₪54,900 includes'"
+ },
+ {
+  "date": "2026-11-22",
+  "group_name": "מעל 60 ולא קשישים",
+  "group_url": "https://www.facebook.com/groups/263145391354523",
+  "status": "posted",
+  "note": "11.3K members, no rules listed; joined as page, post published live – '6 questions to ask any clinic before implants'"
+ },
+ {
+  "date": "2026-11-22",
+  "group_name": "+ 60 ששים פלוס החיים יפים",
+  "group_url": "https://www.facebook.com/groups/391749068602854",
+  "status": "skipped_rules",
+  "note": "commercial posts only via paid ad track arranged by DM with admin (we don't DM) – owner may contact admin manually"
+ },
+ {
+  "date": "2026-11-22",
+  "group_name": "הגיל השלישי",
+  "group_url": "https://www.facebook.com/groups/HAGILH3",
+  "status": "skipped_rules",
+  "note": "no ad ban, but very low activity (77 posts/month) – candidate for later"
+ },
+ {
+  "date": "2026-11-23",
+  "group_name": "הגיל השלישי במקום הראשון",
+  "group_url": "https://www.facebook.com/groups/gilshlishi",
+  "status": "posted",
+  "note": "posted as Fly Dent page – 5 questions to ask a clinic before full-mouth rehab. Group description invites sharing services for seniors; rules: courtesy, no hate/bullying. 9.6K members"
+ },
+ {
+  "date": "2026-11-23",
+  "group_name": "מעל 60 ולא קשישים",
+  "group_url": "https://www.facebook.com/groups/263145391354523",
+  "status": "posted",
+  "note": "posted as Fly Dent page – what is included in full-mouth rehab for ₪54,900. No group rules listed; 11.3K members, very active"
+ },
+ {
+  "date": "2026-11-24",
+  "group_name": "גימלאים",
+  "group_url": "https://www.facebook.com/groups/77029542403",
+  "status": "posted",
+  "note": "12.2K members, ~2.2K posts/month, no rules listed; joined as page, post pending admin approval – \"signs it may be time to check full-mouth rehab\""
+ },
+ {
+  "date": "2026-11-24",
+  "group_name": "חברים שאוהבים את גיל הזהב - מעגלי החיים +60",
+  "group_url": "https://www.facebook.com/groups/194891740865798",
+  "status": "posted",
+  "note": "5.3K members, ~490 posts/month, rules have no ad ban; joined as page, post pending admin approval – FAQ: most common questions from 60+"
+ },
+ {
+  "date": "2026-11-24",
+  "group_name": "חמישים פלוס",
+  "group_url": "https://www.facebook.com/groups/238122419562974",
+  "status": "excluded",
+  "note": "rules: not a platform for advertising posts"
+ },
+ {
+  "date": "2026-11-24",
+  "group_name": "גמלאים, פנסיונרים ומה שבינהם",
+  "group_url": "https://www.facebook.com/groups/gmlem",
+  "status": "skipped_rules",
+  "note": "no ad ban, 25.6K members but low activity (32 posts/month) – candidate for later"
+ },
+ {
+  "date": "2026-11-24",
+  "group_name": "(log repair)",
+  "group_url": "",
+  "status": "skipped_rules",
+  "note": "Drive sync commits had overwritten this file, dropping 19/22/23.11 entries; restored from git history. Note: 23.11 run re-posted in gilshlishi and 263145391354523 one day after 22.11 (14-day rule broken because of the lost log)."
  }
 ]
